@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Diagnostics;
 using Lab1;
 
 namespace Lab1_Test
@@ -7,11 +8,11 @@ namespace Lab1_Test
     public class ProteinSelection
     {
 
-        RestaurantMenu menu;
+        RestaurantMenu? menu;
         [TestInitialize]
         public void TestSetup()
         {
-            menu = new RestaurantMenu();
+           menu = new RestaurantMenu();
         }
 
         [TestMethod]
