@@ -7,7 +7,7 @@ float total = 0;
 bool exit = false;
 while (exit == false)
 {
-    Console.WriteLine("Enter product name (Type \"exit\" whend done) :");
+    Console.WriteLine("Enter product name (Type \"exit\" when done) :");
     string response = Console.ReadLine().ToLower();
     switch (response) {
         case "apple":
