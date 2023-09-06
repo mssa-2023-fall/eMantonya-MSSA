@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 Dictionary<string, float[]> Cart = new Dictionary<string, float[]>();
 
 float total = 0;
@@ -41,13 +43,18 @@ while (exit == false)
             break;
     }
 }
-Console.WriteLine("****************Receipt****************");
+
 float totalItems = 0;
+var sb = new StringBuilder();
+sb.AppendLine("****************Receipt****************");
+
 foreach (var item in Cart)
 {
-    Console.WriteLine($"**{item.Key} -- {item.Value[0]}@ {item.Value[1]:c}ea  =  {item.Value[0] * item.Value[1]:c}**");
+    sb.AppendLine($"**{item.Key} -- {item.Value[0]}@ {item.Value[1]:c}ea  =  {item.Value[0] * item.Value[1]:c}**");
     totalItems += item.Value[0];
 }
-Console.WriteLine($"**Total Items: {totalItems}-Total Price: {total:c}**");
+sb.AppendLine($"**Total Items: {totalItems}-Total Price: {total:c}**");
+
+Console.WriteLine(sb);
 
 
