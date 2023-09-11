@@ -1,4 +1,4 @@
-﻿namespace Lab4_LL
+﻿namespace EricClass
 {
     public class Class1
     {
