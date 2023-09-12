@@ -62,5 +62,28 @@ namespace TreeTest
             Assert.AreEqual(result.value, 45);
         }
 
+        [TestMethod]
+        public void GetMaxWorks()
+        {
+            BinaryTree tree = new BinaryTree(8);
+            for (int i = 0; i < 50; i += 3)
+            {
+                tree.Insert(i);
+            }
+            int result = tree.GetMax(tree.root);
+            Assert.AreEqual(48, result);
+        }
+        [TestMethod]
+        public void GetMinWorks()
+        {
+            BinaryTree tree = new BinaryTree(3);
+            for (int i = 10; i < 60; i += 3)
+            {
+                tree.Insert(i);
+            }
+            int result = tree.GetMin(tree.root);
+            Assert.AreEqual(3, result);
+        }
+
     }
 }

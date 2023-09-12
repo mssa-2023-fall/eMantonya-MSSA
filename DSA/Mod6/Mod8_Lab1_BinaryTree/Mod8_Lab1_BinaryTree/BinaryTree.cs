@@ -98,6 +98,24 @@
             } 
             
         }
+
+        public int GetMax(Node n)
+        {
+            if(n.rightChild == null)
+            {
+                return n.value;
+            }
+            return GetMax(n.rightChild);
+        }
+
+        public int GetMin(Node n)
+        {
+            if(n.leftChild == null)
+            {
+                return n.value;
+            }
+            return GetMin(n.leftChild);
+        }
     }
 }
 
