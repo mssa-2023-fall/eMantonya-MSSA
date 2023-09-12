@@ -61,6 +61,18 @@ namespace TreeTest
 
             Assert.AreEqual(result.value, 45);
         }
+        [TestMethod]
+        public void GetNodeReturnsNullIfNotFound()
+        {
+            BinaryTree tree = new BinaryTree();
+            for (int i = 0; i < 50; i += 3)
+            {
+                tree.Insert(i);
+            }
+
+            var result = tree.GetNode(tree.root, 22);
+            Assert.IsNull(result);
+        }
 
         [TestMethod]
         public void GetMaxWorks()
@@ -84,6 +96,14 @@ namespace TreeTest
             int result = tree.GetMin(tree.root);
             Assert.AreEqual(3, result);
         }
+        [TestMethod]
+        public void NodeParentValueIsAssignedCorrectly()
+        {
+            BinaryTree tree = new BinaryTree(8);
+            tree.Insert(7);
+            var n = tree.GetNode(tree.root, 7);
 
+            Assert.AreEqual(tree.root.value, n.parent.value);
+        }
     }
 }
