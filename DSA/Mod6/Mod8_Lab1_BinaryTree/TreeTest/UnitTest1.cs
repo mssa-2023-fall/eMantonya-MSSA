@@ -3,43 +3,52 @@
 namespace TreeTest
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTest1 
     {
+        //===================Testing Integers==================//
         [TestMethod]
         public void DefaultTreeConstructorShouldReturnNullRoot()
         {
-            BinaryTree tree = new BinaryTree();
+            var tree = new BinaryTree<int>();
 
             Assert.IsNull(tree.root);
         }
+
         [TestMethod]
         public void InsertNodeInEmptyTreeFillsRootProperty()
         {
-            BinaryTree tree = new BinaryTree();
+            var tree = new BinaryTree<int>();
+            
             tree.Insert(3);
 
             Assert.AreEqual(3, tree.root.value);
         }
+
         [TestMethod]
         public void CallingTreeConstructorWithValueParamSetsRootNode()
         {
-            BinaryTree tree = new BinaryTree(3);
+            var tree = new BinaryTree<int>(3);
 
             Assert.AreEqual(3, tree.root.value);
         }
+
         [TestMethod]
-        public void RootsLeftChildisAssignedCorrectly()
+        public void RootsChilderenAreAssignedCorrectly()
         {
-            BinaryTree tree = new BinaryTree(5);
+            var tree = new BinaryTree<int>(5);
             tree.Insert(3);
+            tree.Insert(7);
 
             Assert.AreEqual(3, tree.root.leftChild.value);
             Assert.AreEqual(1, tree.root.leftChild.treeLevel);
+            Assert.AreEqual(7, tree.root.rightChild.value);
+            Assert.AreEqual(1, tree.root.rightChild.treeLevel);
         }
+
         [TestMethod]
         public void MultipleInsertsWorkCorrectly()
         {
-            BinaryTree tree = new BinaryTree();
+            var tree = new BinaryTree<int>();
             for (int i = 0; i < 100; i += 3)
             {
                 tree.Insert(i);
@@ -47,11 +56,10 @@ namespace TreeTest
             Assert.AreEqual(34, tree.NodeCount);
         }
 
-
         [TestMethod]
         public void GetNodeWorks()
         {
-            BinaryTree tree = new BinaryTree(8);
+            var tree = new BinaryTree<int>(8);
             for (int i = 0; i < 50; i += 3)
             {
                 tree.Insert(i);
@@ -61,10 +69,11 @@ namespace TreeTest
 
             Assert.AreEqual(result.value, 45);
         }
+
         [TestMethod]
         public void GetNodeReturnsNullIfNotFound()
         {
-            BinaryTree tree = new BinaryTree();
+            var tree = new BinaryTree<int>();
             for (int i = 0; i < 50; i += 3)
             {
                 tree.Insert(i);
@@ -77,7 +86,7 @@ namespace TreeTest
         [TestMethod]
         public void GetMaxWorks()
         {
-            BinaryTree tree = new BinaryTree(8);
+            var tree = new BinaryTree<int>(8);
             for (int i = 0; i < 50; i += 3)
             {
                 tree.Insert(i);
@@ -85,10 +94,11 @@ namespace TreeTest
             int result = tree.GetMax(tree.root);
             Assert.AreEqual(48, result);
         }
+
         [TestMethod]
         public void GetMinWorks()
         {
-            BinaryTree tree = new BinaryTree(3);
+            var tree = new BinaryTree<int>(3);
             for (int i = 10; i < 60; i += 3)
             {
                 tree.Insert(i);
@@ -96,14 +106,72 @@ namespace TreeTest
             int result = tree.GetMin(tree.root);
             Assert.AreEqual(3, result);
         }
+
         [TestMethod]
         public void NodeParentValueIsAssignedCorrectly()
         {
-            BinaryTree tree = new BinaryTree(8);
+            var tree = new BinaryTree<int>(8);
             tree.Insert(7);
             var n = tree.GetNode(tree.root, 7);
 
             Assert.AreEqual(tree.root.value, n.parent.value);
+        }
+
+
+        //=================Testing Strings=================// 
+        [TestMethod]
+        public void StringsAreInsertedCorrectly()
+        {
+            var tree = new BinaryTree<string>("banana");
+            tree.Insert("apple");
+            tree.Insert("carrot");
+
+            Assert.AreEqual(tree.root.value, "banana");
+            Assert.AreEqual(tree.root.leftChild.value, "apple");
+            Assert.AreEqual(tree.root.rightChild.value, "carrot");
+        }
+        [TestMethod]
+        public void GetNodeWorksWithStrings()
+        {
+            var tree = new BinaryTree<string>("f");
+            tree.Insert("a");
+            tree.Insert("b");
+            tree.Insert("c");
+            tree.Insert("d");
+            tree.Insert("e");
+            tree.Insert("g");
+            tree.Insert("h");
+            tree.Insert("i");
+            tree.Insert("j");
+            tree.Insert("k");
+
+
+            var result = tree.GetNode(tree.root, "j");
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.value, "j");
+        }
+        [TestMethod]
+        public void GetMaxAndMinWorksWithStrings()
+        {
+            var tree = new BinaryTree<string>("f");
+            tree.Insert("a");
+            tree.Insert("b");
+            tree.Insert("c");
+            tree.Insert("d");
+            tree.Insert("e");
+            tree.Insert("g");
+            tree.Insert("h");
+            tree.Insert("i");
+            tree.Insert("j");
+            tree.Insert("k");
+
+            var max = tree.GetMax(tree.root);
+            var min = tree.GetMin(tree.root);
+
+            Assert.IsNotNull(max);
+            Assert.IsNotNull(min);
+            Assert.AreEqual(max, "k");
+            Assert.AreEqual(min, "a");
         }
     }
 }
