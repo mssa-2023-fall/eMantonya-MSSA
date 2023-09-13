@@ -5,7 +5,6 @@ namespace CustomerLogin
 {
     public class Customer
     {
-        private Hasher hasher = new();
         private string _eMail;
         private string _name;
         //private string _password;
@@ -19,7 +18,7 @@ namespace CustomerLogin
             _eMail = eMail;
             _name = name;
             //_password = password;
-            _passwordHash = hasher.ComputeHash(password, salt);
+            _passwordHash = Hasher.ComputeHash(password, salt);
         }
 
     }

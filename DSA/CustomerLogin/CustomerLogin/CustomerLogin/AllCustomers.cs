@@ -11,7 +11,6 @@ namespace CustomerLogin
     public class AllCustomers
     {
         public Dictionary<string, Customer> allCustomers = new Dictionary<string, Customer>();
-        private Hasher hasher = new();
 
         public bool CreateAccount(string eMail, string name, string pass)
         {
@@ -32,7 +31,7 @@ namespace CustomerLogin
             {
                 return false;
             }
-            if (hasher.VerifyPassword(pass, allCustomers[email]._passwordHash, allCustomers[email].salt))
+            if (Hasher.VerifyPassword(pass, allCustomers[email]._passwordHash, allCustomers[email].salt))
             {
                 return true;
             }

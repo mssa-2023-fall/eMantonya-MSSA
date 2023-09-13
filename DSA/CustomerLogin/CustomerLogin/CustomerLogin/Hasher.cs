@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace CustomerLogin
 {
-    public class Hasher
+    public static class Hasher
     {
         const int keySize = 64;
         const int iterations = 350000;
-        HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
-        public byte[] ComputeHash(string input, byte[] salt)
+        static HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+        public static byte[] ComputeHash(string input, byte[] salt)
         {
 
             var hash = Rfc2898DeriveBytes.Pbkdf2(
@@ -26,7 +26,7 @@ namespace CustomerLogin
         }
        
 
-        public bool VerifyPassword(string clearPassword, byte[] passwordHash, byte[] salt)
+        public static bool VerifyPassword(string clearPassword, byte[] passwordHash, byte[] salt)
         {
 
             var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(clearPassword, salt, iterations, hashAlgorithm, keySize);
