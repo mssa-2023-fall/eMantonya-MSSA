@@ -3,8 +3,17 @@
 namespace TreeTest
 {
     [TestClass]
-    public class UnitTest1 
+    public class BinaryTreeTests
     {
+        public static int[] GenerateSortedNumber(int size)
+        {
+            var array = new int[size];
+
+            for (int i = 0; i < size; i++)
+                array[i] = i;
+
+            return array;
+        }
         //===================Testing Integers==================//
         [TestMethod]
         public void DefaultTreeConstructorShouldReturnNullRoot()
@@ -18,7 +27,7 @@ namespace TreeTest
         public void InsertNodeInEmptyTreeFillsRootProperty()
         {
             var tree = new BinaryTree<int>();
-            
+
             tree.Insert(3);
 
             Assert.AreEqual(3, tree.root.value);
@@ -49,11 +58,14 @@ namespace TreeTest
         public void MultipleInsertsWorkCorrectly()
         {
             var tree = new BinaryTree<int>();
-            for (int i = 0; i < 100; i += 3)
+            for (int i = 1; i <= 100; i ++)
             {
+                //root must be the mid number or the tree is unbalaced
+                tree.root = new Node<int>(100 / 2);
                 tree.Insert(i);
             }
-            Assert.AreEqual(34, tree.NodeCount);
+            Assert.AreEqual(100, tree.NodeCount);
+            Assert.AreEqual(tree.root.value, 50);
         }
 
         [TestMethod]
@@ -115,6 +127,15 @@ namespace TreeTest
             var n = tree.GetNode(tree.root, 7);
 
             Assert.AreEqual(tree.root.value, n.parent.value);
+        }
+
+        [TestMethod]
+        public void BuildTreeWorks()
+        {
+            int[] nums = GenerateSortedNumber(500);
+            var result = BinaryTree<int>.BuildTree(nums);
+
+            Assert.AreEqual(result.NodeCount, nums.Length);
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace Mod8_Lab1_BinaryTree
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Mod8_Lab1_BinaryTree
 {
     public class BinaryTree<T>
     {
@@ -23,13 +25,25 @@
             root = new Node<T>(init);
         }
 
+        public static BinaryTree<T> BuildTree(T[] arr)
+        {
+            //add the midpoint value of the array to the root using the constructor
+            //root must be midpoint value or tree will be unbalanced
+            var result = new BinaryTree<T>(arr[arr.Length / 2]);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                result.Insert(arr[i]);
+            }
+            return result;
+        }
+
         public Node<T> GetNode(Node<T> n, T value)
         {
             //n starts as root node, if its null, the tree is empty
             if (n == null) { return null; }
             //if the value is found, return that node and break out of the recursive call
             //if (n.value == value) { return n; } //change this to be able to compare generics
-            if(n.value.Equals(value)) { return n; }
+            if (n.value.Equals(value)) { return n; }
             //if the current nodes value is greater than the target value, recursively call GetNode on the current nodes left child
             //if (n.value > value) //change this to be able to compare generics
             if (Comparer<T>.Default.Compare(n.value, value) > 0)
@@ -45,7 +59,9 @@
 
         public void Insert(T value)
         {
+            //create a new node with the argument value
             Node<T> n = new Node<T>(value);
+            //if root is null, tree is empty, add the value to the root.
             if (root == null)
             {
                 root = n;
@@ -74,7 +90,7 @@
                     }
                      else
                     {
-                        //current node's left child is already assigned, move current node pointer to the left child and add to the level counter
+                        //current node's left child is already assigned, move current node pointer to the left child and add to the level counter then try again
                         current = current.leftChild;
                         levelCounter++;
                     }
@@ -104,6 +120,9 @@
 
         public T GetMax(Node<T> n)
         {
+            //define the breakoutcase for the recursion method
+            //the max number will be the rightmost point of the tree
+            //if there is no longer a right child for the current node, the end of the tree is reached.
             if(n.rightChild == null)
             {
                 return n.value;
