@@ -36,5 +36,7 @@ namespace LearnSystemIO
             movie = input[movieRange];
 
         }
+
+        public Winner() { }
     }
 }

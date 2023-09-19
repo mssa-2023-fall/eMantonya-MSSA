@@ -1,4 +1,10 @@
-﻿namespace LearnSystemIO
+﻿using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Parquet.Serialization;
+
+namespace LearnSystemIO
 {
     [TestClass]
     public class UnitTest1
@@ -147,7 +153,7 @@
         [TestMethod]
         public void TestParsingStringToWinnerInstance()
         {
-            string input = @"1, 1982, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
+            string input = @"1, 1928, 44, ""Emil Jannings"", ""The Last Command, The Way of All Flesh""";
             Winner w = new Winner(input);
 
             Assert.AreEqual(44, w.age);
@@ -190,6 +196,39 @@
             }
             sw.Close();
         }
+        [TestMethod]
+        public void ParseCsvUsingHelperPackage()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                BadDataFound = null,
+                Quote = '"',
+                Delimiter= ", "
+            };
+            IEnumerable<Winner> records = new List<Winner>();
+            Winner w;
+            List<Winner> winners;
+            using(var reader = new StreamReader(@"C:\\mssa-repos\\eMantonya-MSSA\\DSA\\LearnSystemIO\oscar_age_male.csv"))
+            using(var csv = new CsvReader(reader, config))
+            {
+                records = csv.GetRecords<Winner>();
+                winners = records.ToList();
+                w = winners[0];
+            }
 
+            Assert.AreEqual(44, w.age);
+            Assert.AreEqual("Emil Jannings", w.name);
+            Assert.AreEqual(1928, w.year);
+            Assert.AreEqual(1, w.index);
+            Assert.AreEqual("The Last Command, The Way of All Flesh", w.movie);
+            ParquetSerializer.SerializeAsync(winners, @"C:\\mssa-repos\\eMantonya-MSSA\\DSA\\LearnSystemIO\winners.parquet").Wait();
+        }
+        [TestMethod]
+        public void DeserializeParquet()
+        {
+            IList<Winner> winners = 
+                ParquetSerializer.DeserializeAsync<Winner>(new FileStream(@"C:\\mssa-repos\\eMantonya-MSSA\\DSA\\LearnSystemIO\winners.parquet", FileMode.Open)).Result;
+        }
     }
 }
