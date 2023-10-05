@@ -104,7 +104,7 @@ Customer GetCustomer(List<Customer> customerList)
     var name = AnsiConsole.Ask<string>("Enter the [green]name[/] of the customer: ");
     foreach (Customer cust in customerList)
     {
-        if (cust._accountHolder.Equals(name)) ;
+        if (cust._accountHolder.Equals(name))
         {
             return cust;
         }
